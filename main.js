@@ -1,5 +1,5 @@
 //IdleFarm(WIP) By William Harvey
-//Idle Game where you develop your village
+//Idle Game where you develop your village.
 
 //click values
 var foodClick = 10; var woodClick = 10; var stoneClick = 10;
