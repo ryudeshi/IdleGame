@@ -46,7 +46,6 @@ function gatherStone(number) {
 };
 
 //First Tier Upgrades
-//In this section
 function buyFarmer(){
   var farmerCost = Math.floor(10 * Math.pow(1.2,farmers));
   if(food >= farmerCost){
@@ -125,6 +124,7 @@ function buyQuarry(){
   document.getElementById('quarryCost').innerHTML = nextQuarryCost;
   updateProduction();
 };
+//END second tier upgrades
 
 function updateProduction(){
   foodProd = farmers + farmlandProduction;
