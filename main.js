@@ -119,6 +119,7 @@ material = '';
 //var foodProd = 0; var woodProd = 0; var stoneProd = 0;
 //initial resource caps
 //var foodCap = 200; var woodCap = 200; var stoneCap = 200;
+//gittest
 
 function gatherRes(material) {
   material.total = material.total + (material.increment * material.mult * worldMult);
