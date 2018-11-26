@@ -19,7 +19,14 @@ wood = {
   cap:200
 },
 stone = {
-  name:'wood',
+  name:'stone',
+  total:0,
+  increment:1,
+  mult:1,
+  cap:200
+},
+iron = {
+  name:'iron',
   total:0,
   increment:1,
   mult:1,
@@ -96,11 +103,13 @@ mine = {
   total:0,
   increment:0.5,
   mult:1
-}
-pop = 0
-maxPop = 0
-buildings = 0
-clicks = 0
+},
+worldMult = 100,
+pop = 0,
+maxPop = 0,
+buildings = 0,
+clicks = 0,
+material = '';
 
 //workers and buildings (production)
 //var farmer = 0; var lumberjack = 0; var stonemason = 0;
@@ -112,31 +121,51 @@ clicks = 0
 //var foodCap = 200; var woodCap = 200; var stoneCap = 200;
 
 function gatherRes(material) {
-  if(material = food && food.total <= food.cap){
+  material.total = material.total + (material.increment * material.mult * worldMult);
+  if(food.total >= food.cap){
+    food.total = food.cap;
+  }
+  if(wood.total >= wood.cap){
+    wood.total = wood.cap;
+  }
+  if(stone.total >= stone.cap){
+    stone.total = stone.cap;
+  }
+  if(iron.total >= iron.cap){
+    iron.total = iron.cap;
+  }
+  updateRes();
+};
+function updateRes(){
+  document.getElementById("food").innerHTML = food.total;
+  document.getElementById("wood").innerHTML = wood.total;
+  document.getElementById("stone").innerHTML = stone.total;
+  document.getElementById("iron").innerHTML = iron.total;
+};
+  /*if(material = food){
     food.total = food.total + (food.increment * food.mult);
     document.getElementById("food").innerHTML = food.total;
-      if(food >= foodCap){
+      if(food >= food.cap){
         food.total = food.cap;
         document.getElementById("food").innerHTML = food.total;
-    };
-  };
-  if(material = wood && wood.total <= wood.cap){
+    }
+  }
+  if(material = wood){
     wood.total = wood.total + (wood.increment * wood.mult);
     document.getElementById("wood").innerHTML = wood.total;
       if(wood.total >= wood.cap){
         wood.total = wood.cap;
         document.getElementById("wood").innerHTML = wood.total;
-    };
-  };
-  if(material = stone && stone.total <= stone.cap){
+    }
+  }
+  if(material = stone){
     stone.total = stone.total + (stone.increment * stone.mult);
     document.getElementById("stone").innerHTML = stone.total;
       if(stone.total >= stone.cap){
         stone.total = stone.cap;
         document.getElementById("stone").innerHTML = stone.total;
-    };
-  };
-};
+    }
+  }*/
 //Old Code
 /*function gatherWood(number) {
   if(wood <= woodCap){
