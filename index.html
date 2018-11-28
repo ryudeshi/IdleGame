@@ -11,7 +11,8 @@
   Production<br>
   Food: <span id="foodProd">0</span>/s |
   Wood: <span id="woodProd">0</span>/s |
-  Stone: <span id="stoneProd">0</span>/s
+  Stone: <span id="stoneProd">0</span>/s |
+  iron: <span id="ironProd">0</span>/s
 </header>
 <div class="flex-container">
   <div>
@@ -23,46 +24,56 @@
     <button onmousedown="gatherRes(stone)">Gather Stone</button>
     Stone: <span id="stone">0</span><br><br>
     <button onmousedown="gatherRes(iron)">Gather Iron</button>
-    Stone: <span id="iron">0</span><br><br>
+    Iron: <span id="iron">0</span><br><br>
   </div>
   <div>
     <h2>Food</h2>
     <button onmousedown="buyWorker(farmer,1)">Buy Farmer</button>
-    Farmers: <span id="farmers">0</span>
+    Farmers: <span id="farmer">0</span>
     <br />
     Farmer Cost: <span id="farmerCost">10</span> Food.
     <br /><br>
-    <button onmousedown="buyBuilding()">Buy Mill</button>
-    Mills: <span id="mill">0</span>
+    <button onmousedown="buyBuilding(foodmill,1)">Buy Food Mill</button>
+    Food Mills: <span id="foodmill">0</span>
     <br />
-    Mill Cost: <span id="millCost">100</span><br>
+    Food Mill Cost: <span id="millCost">100</span><br>
   </div>
   <div>
     <h2>Wood</h2>
-    <button onmousedown="buyLumberjack()">Buy Lumberjack</button>
-    Lumberjacks: <span id="lumberjacks">0</span>
+    <button onmousedown="buyWorker(lumberjack,1)">Buy Lumberjack</button>
+    Lumberjacks: <span id="lumberjack">0</span>
     <br />
-    Lumberjack Cost: <span id="lumberjackCost">10</span> Wood.
+    Lumberjack Cost: <span id="lumberjackCost">10</span> Food & Wood.
     <br /><br>
-    <button onmousedown="buySawmill()">Buy Sawmill</button>
+    <button onmousedown="buyBuilding(sawmill,1)">Buy Sawmill</button>
     Sawmills: <span id="sawmill">0</span>
     <br />
     Sawmill Cost: <span id="sawmillCost">100</span>
   </div>
   <div>
     <h2>Stone</h2>
-    <button onmousedown="buyStonemason()">Buy Stonemason</button>
-    Stonemasons: <span id="stonemasons">0</span>
+    <button onmousedown="buyWorker(stonemason,1)">Buy Stonemason</button>
+    Stonemasons: <span id="stonemason">0</span>
     <br />
-    Stonemason Cost: <span id="stonemasonCost">10</span> Stone.
+    Stonemason Cost: <span id="stonemasonCost">10</span> Wood & Stone.
     <br /><br>
-    <button onmousedown="buyQuarry()">Buy Quarry</button>
+    <button onmousedown="buyBuilding(quarry,1)">Buy Quarry</button>
     Quarrys: <span id="quarry">0</span>
     <br />
     Quarry Cost: <span id="quarryCost">100</span>
   </div>
   <div>
     <h2>Iron</h2>
+    <button onmousedown="buyWorker(blacksmith)">Buy Blacksmith</button>
+    Blacksmiths: <span id="blacksmith">0</span>
+    <br />
+    Blacksmith Cost: <span id="stonemasonCost">10</span> Stone & iron.
+    <br /><br>
+    <button onmousedown="buyBuilding(forge)">Buy Forge</button>
+    Forges: <span id="forge">0</span>
+    <br />
+    Forge Cost: <span id="forgeCost">100</span>
+  </div>
     <script type="text/javascript" src="main.js"></script>
 </div>
 
