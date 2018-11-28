@@ -105,7 +105,7 @@ forge = {
   increment:0.5,
   mult:1
 },
-worldMult = 1,
+globalMult = 1,
 pop = 0,
 maxPop = 0,
 buildings = 0,
@@ -114,7 +114,7 @@ material = '';
 worker = '';
 
 function gatherRes(material) {
-  material.total = material.total + (material.increment * material.mult * worldMult);
+  material.total = material.total + (material.increment * material.mult * globalMult);
   if(food.total >= food.cap){
     food.total = food.cap;
   }
@@ -159,10 +159,10 @@ function buyWorker(worker){
 };
 
 function updateProduction(){
-  food.auto = (farmer.total * farmer.increment * worldMult) + (foodmill.total * foodmill.increment * worldMult);
-  wood.auto = (lumberjack.total * lumberjack.increment * worldMult) + (sawmill.total * sawmill.increment * worldMult);
-  stone.auto = (stonemason.total * stonemason.increment * worldMult) + (quarry.total * quarry.increment * worldMult);
-  iron.auto = (blacksmith.total * blacksmith.increment * worldMult) + (forge.total * forge.increment * worldMult);
+  food.auto = (farmer.total * farmer.increment * globalMult) + (foodmill.total * foodmill.increment * globalMult);
+  wood.auto = (lumberjack.total * lumberjack.increment * globalMult) + (sawmill.total * sawmill.increment * globalMult);
+  stone.auto = (stonemason.total * stonemason.increment * globalMult) + (quarry.total * quarry.increment * globalMult);
+  iron.auto = (blacksmith.total * blacksmith.increment * globalMult) + (forge.total * forge.increment * globalMult);
   updatePage();
 }
 
@@ -194,8 +194,8 @@ function autoProduction(){
   updatePage();
 }
 
-function setWorldMult(number){
-  worldMult = number;
+function setGlobalMult(number){
+  globalMult = number;
 }
 
 
