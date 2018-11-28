@@ -5,7 +5,7 @@ var food = {
   name:'food',  //resource name
   total:0,      //current amount
   increment:1,  //default increment per click
-  mult:1,       //increment multiplier (upgrades)
+  mult:1,       //increment multiplier (upgrades increase multiplier)
   cap:200,      //current max storage of a resource (upgrades increase caps)
   auto:0        //how much is automatically being produced (from workers/buildings)
 },
