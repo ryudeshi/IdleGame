@@ -36,7 +36,7 @@ iron = {
 farmer = {
   name:'farmer',
   total:0,
-  increment:1,
+  increment:0.1,
   mult:1,
   cost:{
     food:10,
@@ -48,7 +48,7 @@ farmer = {
 lumberjack = {
   name:'lumberjack',
   total:0,
-  increment:1,
+  increment:0.1,
   mult:1,
   cost:{
     food:10,
@@ -60,7 +60,7 @@ lumberjack = {
 stonemason = {
   name:'stonemason',
   total:0,
-  increment:1,
+  increment:0.1,
   mult:1,
   cost:{
     food:0,
@@ -72,7 +72,7 @@ stonemason = {
 blacksmith = {
   name:'blacksmith',
   total:0,
-  increment:1,
+  increment:0.1,
   mult:1,
   cost:{
     food:0,
@@ -105,20 +105,28 @@ forge = {
   increment:0.5,
   mult:1
 },
-globalMult = 1,
+globalMult = 10,
 pop = 0,
 maxPop = 0,
 buildings = 0,
 clicks = 0,
-material = '';
-worker = '';
+material = '',
+worker = '',
+resets = 0
+
+function initializePage(resets){
+
+};
 
 function gatherRes(material) {
   material.total = material.total + (material.increment * material.mult * globalMult);
-  if(food.total >= food.cap){
-    food.total = food.cap;
+  document.getElementById(material.name).innerHTML = material.total;
+  if(material.total >= material.cap){
+    material.total = material.cap;
+    document.getElementById(material.name).innerHTML = material.total;
+
   }
-  if(wood.total >= wood.cap){
+  /*if(wood.total >= wood.cap){
     wood.total = wood.cap;
   }
   if(stone.total >= stone.cap){
@@ -127,22 +135,22 @@ function gatherRes(material) {
   if(iron.total >= iron.cap){
     iron.total = iron.cap;
   }
-  updatePage();
+  updatePage();*/
 };
 
 function updatePage(){
-  document.getElementById("food").innerHTML = food.total;
-  document.getElementById("wood").innerHTML = wood.total;
-  document.getElementById("stone").innerHTML = stone.total;
-  document.getElementById("iron").innerHTML = iron.total;
+  document.getElementById("food").innerHTML = parseFloat(food.total.toFixed(0));
+  document.getElementById("wood").innerHTML = parseFloat(wood.total.toFixed(0));
+  document.getElementById("stone").innerHTML = parseFloat(stone.total.toFixed(0));
+  document.getElementById("iron").innerHTML = parseFloat(iron.total.toFixed(0));
   document.getElementById("farmer").innerHTML = farmer.total;
   document.getElementById("lumberjack").innerHTML = lumberjack.total;
   document.getElementById("stonemason").innerHTML = stonemason.total;
   document.getElementById("blacksmith").innerHTML = blacksmith.total;
-  document.getElementById("foodProd").innerHTML = food.auto;
-  document.getElementById("woodProd").innerHTML = wood.auto;
-  document.getElementById("stoneProd").innerHTML = stone.auto;
-  document.getElementById("ironProd").innerHTML = iron.auto;
+  document.getElementById("foodProd").innerHTML = parseFloat(food.auto.toFixed(0));
+  document.getElementById("woodProd").innerHTML = parseFloat(wood.auto.toFixed(0));
+  document.getElementById("stoneProd").innerHTML = parseFloat(stone.auto.toFixed(0));
+  document.getElementById("ironProd").innerHTML = parseFloat(iron.auto.toFixed(0));
 };
 
 function buyWorker(worker){
