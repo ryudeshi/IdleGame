@@ -1,142 +1,212 @@
 //IdleFarm(WIP) By William Harvey
 //Idle Game where you develop your village.
 
-//click values
-var foodClick = 10; var woodClick = 10; var stoneClick = 10;
-//resources
-var food = 0; var wood = 0; var stone = 0;
-//workers and buildings (production)
-var farmers = 0; var lumberjacks = 0; var stonemasons = 0;
-var farmland = 0; var sawmill = 0; var quarry = 0;
-var farmlandProduction = 0; var sawmillProduction = 0; var quarryProduction = 0;
-//total resource production values
-var foodProd = 0; var woodProd = 0; var stoneProd = 0;
-//initial resource caps
-var foodCap = 200; var woodCap = 200; var stoneCap = 200;
+var food = {
+  name:'food',  //resource name
+  total:0,      //current amount
+  increment:1,  //default increment per click
+  mult:1,       //increment multiplier (upgrades increase multiplier)
+  cap:200,      //current max storage of a resource (upgrades increase caps)
+  auto:0        //how much is automatically being produced (from workers/buildings)
+},
+wood = {
+  name:'wood',
+  total:0,
+  increment:1,
+  mult:1,
+  cap:200,
+  auto:0
+},
+stone = {
+  name:'stone',
+  total:0,
+  increment:1,
+  mult:1,
+  cap:200,
+  auto:0
+},
+iron = {
+  name:'iron',
+  total:0,
+  increment:1,
+  mult:1,
+  cap:200,
+  auto:0
+},
+farmer = {
+  name:'farmer',
+  total:0,
+  increment:0.1,
+  mult:1,
+  cost:{
+    food:10,
+    wood:0,
+    stone:0,
+    iron:0
+  }
+},
+lumberjack = {
+  name:'lumberjack',
+  total:0,
+  increment:0.1,
+  mult:1,
+  cost:{
+    food:10,
+    wood:10,
+    stone:0,
+    iron:0
+  }
+},
+stonemason = {
+  name:'stonemason',
+  total:0,
+  increment:0.1,
+  mult:1,
+  cost:{
+    food:0,
+    wood:10,
+    stone:10,
+    iron:0
+  }
+},
+blacksmith = {
+  name:'blacksmith',
+  total:0,
+  increment:0.1,
+  mult:1,
+  cost:{
+    food:0,
+    wood:0,
+    stone:10,
+    iron:10
+  }
+},
+foodmill = {
+  name:'mill',
+  total:0,
+  increment:3,
+  mult:1
+},
+sawmill = {
+  name:'sawmill',
+  total:0,
+  increment:2,
+  mult:1
+},
+quarry = {
+  name:'quarry',
+  total:0,
+  increment:1,
+  mult:1
+},
+forge = {
+  name:'mine',
+  total:0,
+  increment:0.5,
+  mult:1
+},
+globalMult = 10,
+pop = 0,
+maxPop = 0,
+buildings = 0,
+clicks = 0,
+material = '',
+worker = '',
+resets = 0
 
-function gatherFood(number) {
-  if(food <= foodCap){
-    food = food + number;
-    document.getElementById("food").innerHTML = food;
-      if(food >= foodCap){
-        food = foodCap;
-        document.getElementById("food").innerHTML = food;
-    };
-  };
-};
-function gatherWood(number) {
-  if(wood <= woodCap){
-    wood = wood + number;
-    document.getElementById("wood").innerHTML = wood;
-      if(wood >= woodCap){
-        wood = woodCap;
-        document.getElementById("wood").innerHTML = wood;
-    };
-  };
-};
-function gatherStone(number) {
-  if(stone <= stoneCap){
-    stone = stone + number;
-    document.getElementById("stone").innerHTML = stone;
-      if(stone >= stoneCap){
-        stone = stoneCap;
-        document.getElementById("stone").innerHTML = stone;
-    };
-  };
+function initializePage(resets){
+
 };
 
-//First Tier Upgrades
-function buyFarmer(){
-  var farmerCost = Math.floor(10 * Math.pow(1.2,farmers));
-  if(food >= farmerCost){
-    farmers = farmers + 1;
-    food = food - farmerCost;
-    document.getElementById('farmers').innerHTML = farmers;
-    document.getElementById('food').innerHTML = food;
-    updateProduction()
-  };
-  var nextCost = Math.floor(10 * Math.pow(1.2,farmers));
-  document.getElementById('farmerCost').innerHTML = nextCost;
-};
-function buyLumberjack(){
-  var lumberjackCost = Math.floor(10 * Math.pow(1.2,lumberjacks));
-  if(wood >= lumberjackCost){
-    lumberjacks = lumberjacks + 1;
-    wood = wood - lumberjackCost;
-    document.getElementById('lumberjacks').innerHTML = lumberjacks;
-    document.getElementById('wood').innerHTML = wood;
-    updateProduction()
-  };
-  var nextCost = Math.floor(10 * Math.pow(1.2,lumberjacks));
-  document.getElementById('lumberjackCost').innerHTML = nextCost;
-};
-function buyStonemason(){
-  var stonemasonCost = Math.floor(10 * Math.pow(1.2,stonemasons));
-  if(stone >= stonemasonCost){
-    stonemasons = stonemasons + 1;
-    stone = stone - stonemasonCost;
-    document.getElementById('stonemasons').innerHTML = stonemasons;
-    document.getElementById('stone').innerHTML = stone;
-    updateProduction()
-  };
-  var nextCost = Math.floor(10 * Math.pow(1.2,stonemasons));
-  document.getElementById('stonemasonCost').innerHTML = nextCost;
-};
-//End First Tier Upgrades
+function gatherRes(material) {
+  material.total = material.total + (material.increment * material.mult * globalMult);
+  document.getElementById(material.name).innerHTML = material.total;
+  if(material.total >= material.cap){
+    material.total = material.cap;
+    document.getElementById(material.name).innerHTML = material.total;
 
-//Second Tier Upgrades
-function buyFarmland(){
-  var farmlandCost = Math.floor(100 * Math.pow(1.2,farmland));
-  if(food >= farmlandCost){
-    farmland = farmland + 1;
-    farmlandProduction = farmland * 10
-    food = food - farmlandCost;
-    document.getElementById('farmland').innerHTML = farmland;
-    document.getElementById('food').innerHTML = food;
-  };
-  var nextFarmlandCost = Math.floor(100 * Math.pow(1.2,farmland));
-  document.getElementById('farmlandCost').innerHTML = nextFarmlandCost;
-  updateProduction();
+  }
+  /*if(wood.total >= wood.cap){
+    wood.total = wood.cap;
+  }
+  if(stone.total >= stone.cap){
+    stone.total = stone.cap;
+  }
+  if(iron.total >= iron.cap){
+    iron.total = iron.cap;
+  }
+  updatePage();*/
 };
-function buySawmill(){
-  var sawmillCost = Math.floor(100 * Math.pow(1.2,sawmill));
-  if(wood >= sawmillCost){
-    sawmill = sawmill + 1;
-    sawmillProduction = sawmill * 10
-    wood = wood - sawmillCost;
-    document.getElementById('sawmill').innerHTML = sawmill;
-    document.getElementById('wood').innerHTML = wood;
-  };
-  var nextSawmillCost = Math.floor(100 * Math.pow(1.2,sawmill));
-  document.getElementById('sawmillCost').innerHTML = nextSawmillCost;
-  updateProduction();
+
+function updatePage(){
+  document.getElementById("food").innerHTML = parseFloat(food.total.toFixed(0));
+  document.getElementById("wood").innerHTML = parseFloat(wood.total.toFixed(0));
+  document.getElementById("stone").innerHTML = parseFloat(stone.total.toFixed(0));
+  document.getElementById("iron").innerHTML = parseFloat(iron.total.toFixed(0));
+  document.getElementById("farmer").innerHTML = farmer.total;
+  document.getElementById("lumberjack").innerHTML = lumberjack.total;
+  document.getElementById("stonemason").innerHTML = stonemason.total;
+  document.getElementById("blacksmith").innerHTML = blacksmith.total;
+  document.getElementById("foodProd").innerHTML = parseFloat(food.auto.toFixed(0));
+  document.getElementById("woodProd").innerHTML = parseFloat(wood.auto.toFixed(0));
+  document.getElementById("stoneProd").innerHTML = parseFloat(stone.auto.toFixed(0));
+  document.getElementById("ironProd").innerHTML = parseFloat(iron.auto.toFixed(0));
 };
-function buyQuarry(){
-  var quarryCost = Math.floor(100 * Math.pow(1.2,quarry));
-  if(stone >= quarryCost){
-    quarry = quarry + 1;
-    quarryProduction = quarry * 10
-    stone = stone - quarryCost;
-    document.getElementById('quarry').innerHTML = quarry;
-    document.getElementById('stone').innerHTML = stone;
-  };
-  var nextQuarryCost = Math.floor(100 * Math.pow(1.2,quarry));
-  document.getElementById('quarryCost').innerHTML = nextQuarryCost;
-  updateProduction();
+
+function buyWorker(worker){
+  if(food.total >= worker.cost.food && wood.total >= worker.cost.wood
+    && stone.total >= worker.cost.stone && iron.total >= worker.cost.iron){
+    worker.total = worker.total + 1;
+    food.total = food.total - worker.cost.food;
+    wood.total = wood.total - worker.cost.wood;
+    stone.total = stone.total - worker.cost.stone;
+    iron.total = iron.total - worker.cost.iron;
+    updatePage();
+    updateProduction();
+  }
 };
-//END second tier upgrades
 
 function updateProduction(){
-  foodProd = farmers + farmlandProduction;
-  document.getElementById('foodProd').innerHTML = foodProd;
-  woodProd = lumberjacks + sawmillProduction;
-  document.getElementById('woodProd').innerHTML = woodProd;
-  stoneProd = stonemasons + quarryProduction;
-  document.getElementById('stoneProd').innerHTML = stoneProd;
-};
+  food.auto = (farmer.total * farmer.increment * globalMult) + (foodmill.total * foodmill.increment * globalMult);
+  wood.auto = (lumberjack.total * lumberjack.increment * globalMult) + (sawmill.total * sawmill.increment * globalMult);
+  stone.auto = (stonemason.total * stonemason.increment * globalMult) + (quarry.total * quarry.increment * globalMult);
+  iron.auto = (blacksmith.total * blacksmith.increment * globalMult) + (forge.total * forge.increment * globalMult);
+  updatePage();
+}
+
+function autoProduction(){
+  if(food.total < food.cap){
+    food.total = food.total + food.auto;
+    if(food.total >= food.cap){
+      food.total = food.cap;
+    }
+  }
+  if(wood.total < wood.cap){
+    wood.total = wood.total + wood.auto;
+    if(wood.total >= wood.cap){
+      wood.total = wood.cap;
+    }
+  }
+  if(stone.total < stone.cap){
+    stone.total = stone.total + stone.auto;
+    if(stone.total >= stone.cap){
+      stone.total = stone.cap;
+    }
+  }
+  if(iron.total < iron.cap){
+    iron.total = iron.total + iron.auto;
+    if(iron.total >= iron.cap){
+      iron.total = iron.cap;
+    }
+  }
+  updatePage();
+}
+
+function setGlobalMult(number){
+  globalMult = number;
+}
+
 
 window.setInterval(function(){
-  gatherFood(foodProd);
-  gatherWood(woodProd);
-  gatherStone(stoneProd);
+  autoProduction();
 }, 1000);
