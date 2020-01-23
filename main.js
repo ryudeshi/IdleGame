@@ -105,7 +105,7 @@ forge = {
   increment:0.5,
   mult:1
 },
-globalMult = 10,
+globalMult = 1,
 pop = 0,
 maxPop = 0,
 buildings = 0,
@@ -120,10 +120,10 @@ function initializePage(resets){
 
 function gatherRes(material) {
   material.total = material.total + (material.increment * material.mult * globalMult);
-  document.getElementById(material.name).innerHTML = material.total;
+  document.getElementById(material.name).innerHTML = parseFloat(material.total.toFixed(2));
   if(material.total >= material.cap){
     material.total = material.cap;
-    document.getElementById(material.name).innerHTML = material.total;
+    document.getElementById(material.name).innerHTML = parseFloat(material.total.toFixed(2));
 
   }
   /*if(wood.total >= wood.cap){
@@ -139,18 +139,19 @@ function gatherRes(material) {
 };
 
 function updatePage(){
-  document.getElementById("food").innerHTML = parseFloat(food.total.toFixed(0));
-  document.getElementById("wood").innerHTML = parseFloat(wood.total.toFixed(0));
-  document.getElementById("stone").innerHTML = parseFloat(stone.total.toFixed(0));
-  document.getElementById("iron").innerHTML = parseFloat(iron.total.toFixed(0));
+  document.getElementById("food").innerHTML = parseFloat(food.total.toFixed(2));
+  document.getElementById("wood").innerHTML = parseFloat(wood.total.toFixed(2));
+  document.getElementById("stone").innerHTML = parseFloat(stone.total.toFixed(2));
+  document.getElementById("iron").innerHTML = parseFloat(iron.total.toFixed(2));
   document.getElementById("farmer").innerHTML = farmer.total;
   document.getElementById("lumberjack").innerHTML = lumberjack.total;
   document.getElementById("stonemason").innerHTML = stonemason.total;
   document.getElementById("blacksmith").innerHTML = blacksmith.total;
-  document.getElementById("foodProd").innerHTML = parseFloat(food.auto.toFixed(0));
-  document.getElementById("woodProd").innerHTML = parseFloat(wood.auto.toFixed(0));
-  document.getElementById("stoneProd").innerHTML = parseFloat(stone.auto.toFixed(0));
-  document.getElementById("ironProd").innerHTML = parseFloat(iron.auto.toFixed(0));
+  document.getElementById("foodProd").innerHTML = parseFloat(food.auto.toFixed(3));
+  document.getElementById("woodProd").innerHTML = parseFloat(wood.auto.toFixed(3));
+  document.getElementById("stoneProd").innerHTML = parseFloat(stone.auto.toFixed(3));
+  document.getElementById("ironProd").innerHTML = parseFloat(iron.auto.toFixed(3));
+  document.getElementById("pop").innerHTML = pop;
 };
 
 function buyWorker(worker){
@@ -161,6 +162,7 @@ function buyWorker(worker){
     wood.total = wood.total - worker.cost.wood;
     stone.total = stone.total - worker.cost.stone;
     iron.total = iron.total - worker.cost.iron;
+    pop = pop + 1;
     updatePage();
     updateProduction();
   }
